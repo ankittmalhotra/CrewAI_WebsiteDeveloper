@@ -46,20 +46,39 @@ This project uses a team of AI agents powered by `crewai` to automatically gener
 
 ## Agent Workflow
 
-The project follows a sequential process where each agent builds upon the work of the previous one.
+The project follows a sequential process where each agent builds upon the work of the previous one. The final developer agent utilizes all the information gathered to build the website.
 
 ```mermaid
 graph TD
-    A[Start] --> B{brief.txt};
-    B --> C[Strategist Agent];
-    C --> D(Brand Identity & Strategy);
-    D --> E[Designer Agent];
-    E --> F(UI/UX Design Plan);
-    F --> G[Animator Agent];
-    G --> H(Animation Strategy);
-    H --> I[Developer Agent];
-    I --> J{index.html};
-    J --> K[End];
+    %% Define Nodes/Agents - Uses new refined roles
+    A["Lead Brand & Marketing Strategist<br/>(Gemini Flash)"]
+    B["Principal UI/UX Designer<br/>(Gemini Flash)"]
+    C["Motion Graphics Specialist<br/>(Gemini Flash)"]
+    D["Lead Web Developer<br/>(Gemini Pro)"]
+    
+    %% Define Tasks
+    subgraph Tasks
+        T1(T1: Brand Strategy & Copy<br/>Define Palette/Copy)
+        T2(T2: UI Design Blueprint<br/>Layout, Tailwind Config)
+        T3(T3: Motion & Animation Plan<br/>Define AOS/GSAP effects)
+        T4(T4: Final Code Generation<br/>Write index.html & Save)
+    end
+    
+    %% Agent-Task Assignments
+    A --> T1
+    B --> T2
+    C --> T3
+    D --> T4
+    
+    %% Task Dependencies/Flow (Process: Sequential)
+    T1 -- Output: Brand Assets (Colors, H1/H2) --> T2
+    T2 -- Output: UI Blueprint (Layout) --> T3
+    T3 -- Output: Animation Plan (Classes) --> T4
+    
+    %% Final Output
+    T4 -- Final Output: index.html --> E{Website Complete 🎉}
+
+
 ```
 
 ## Output
